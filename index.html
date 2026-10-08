@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Explorer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <header class="top-header">
+
+        <a href="#home" class="brand">
+
+            <span class="brand-title">
+                products that you always need to have 
+            </span>
+
+            <span class="brand-subtitle">
+                Curated Products & Collections
+            </span>
+
+        </a>
+
+
+        <a
+            href="#favorites"
+            class="favorites-nav"
+            aria-label="Open favorites"
+        >
+
+            <span class="heart-icon">♡</span>
+
+            <span class="favorites-label">
+                Favorites
+            </span>
+
+            <span
+                id="headerFavoriteCount"
+                class="count-badge"
+            >
+                0
+            </span>
+
+        </a>
+
+    </header>
+
+    <section class="search-section">
+
+        <form
+            id="searchForm"
+            class="search-box"
+        >
+
+            <span class="search-icon">
+                ⌕
+            </span>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search products..."
+                autocomplete="off"
+                aria-label="Search products"
+            >
+
+            <button
+                id="searchButton"
+                class="search-button"
+                type="submit"
+            >
+                Search
+                <span>→</span>
+            </button>
+
+        </form>
+
+    </section>
+
+    <nav
+        class="breadcrumb"
+        aria-label="Breadcrumb"
+    >
+
+        <a href="#home">
+            Dashboard
+        </a>
+
+        <span>/</span>
+
+        <strong id="breadcrumbCurrent">
+            Main Data
+        </strong>
+
+    </nav>
+    <main>
+
+        <section
+            id="homeView"
+            class="page-view"
+        >
+
+            <div class="main-layout">
+
+                <section class="data-section">
+
+                    <div class="section-header">
+
+                        <div class="section-title-group">
+
+                            <h1>
+                                Main Data
+                            </h1>
+
+                            <span
+                                id="itemsCount"
+                                class="items-count"
+                            >
+                                0 items
+                            </span>
+
+                        </div>
+
+
+                        <label class="sort-control">
+
+                            <span>
+                                Sort
+                            </span>
+
+                            <select
+                                id="sortSelect"
+                                aria-label="Sort products"
+                            >
+
+                                <option value="featured">
+                                    Featured
+                                </option>
+
+                                <option value="price-low">
+                                    Price: Low
+                                </option>
+
+                                <option value="price-high">
+                                    Price: High
+                                </option>
+
+                                <option value="rating">
+                                    Rating
+                                </option>
+
+                                <option value="az">
+                                    A-Z
+                                </option>
+
+                            </select>
+
+                        </label>
+
+                    </div>
+
+                    <div
+                        id="loadingState"
+                        class="state-box"
+                        hidden
+                    >
+
+                        <div class="spinner"></div>
+
+                        <strong>
+                            Loading products...
+                        </strong>
+
+                        <span>
+                            Getting the latest results.
+                        </span>
+
+                    </div>
+
+                    <div
+                        id="errorState"
+                        class="state-box error-state"
+                        hidden
+                    >
+
+                        <div class="state-icon">
+                            !
+                        </div>
+
+                        <strong>
+                            We couldn't load the products.
+                        </strong>
+
+                        <span id="errorMessage">
+                            Please try again.
+                        </span>
+
+                        <button
+                            id="retryButton"
+                            class="secondary-button"
+                            type="button"
+                        >
+                            Try again
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="emptySearchState"
+                        class="state-box"
+                        hidden
+                    >
+
+                        <div class="state-icon">
+                            ⌕
+                        </div>
+
+                        <strong>
+                            No products found
+                        </strong>
+
+                        <span>
+                            Try another search term.
+                        </span>
+
+                    </div>
+
+                    <div
+                        id="cardGrid"
+                        class="card-grid"
+                    ></div>
+
+                </section>
+                <aside
+                    class="favorites-sidebar"
+                    aria-label="Favorite products"
+                >
+
+                    <div class="sidebar-header">
+
+                        <div class="sidebar-title">
+
+                            <h2>
+                                Favorites
+                            </h2>
+
+                            <span
+                                id="sidebarFavoriteCount"
+                                class="sidebar-count"
+                            >
+                                0
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="#favorites"
+                            class="view-all"
+                        >
+                            View all
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        id="favoritesSidebarList"
+                        class="favorites-sidebar-list"
+                    ></div>
+
+
+                    <div
+                        id="sidebarEmpty"
+                        class="sidebar-empty"
+                        hidden
+                    >
+
+                        <span class="mini-heart">
+                            ♡
+                        </span>
+
+                        <strong>
+                            No favorites yet
+                        </strong>
+
+                        <span>
+                            Save products to see them here.
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="#favorites"
+                        class="sidebar-view-all"
+                    >
+                        View all favorites
+                        <span>→</span>
+                    </a>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FAVORITES PAGE
+        ================================================== -->
+
+        <section
+            id="favoritesView"
+            class="page-view"
+            hidden
+        >
+
+            <div class="favorites-page-header">
+
+                <div>
+
+                    <div class="eyebrow">
+                        YOUR COLLECTION
+                    </div>
+
+                    <h1>
+                        Favorites
+                    </h1>
+
+                    <p>
+                        Products you've saved for later.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="#home"
+                    class="secondary-button"
+                >
+                    ← Browse products
+                </a>
+
+            </div>
+
+
+            <!-- Empty favorites -->
+
+            <div
+                id="favoritesEmptyState"
+                class="favorite-empty"
+                hidden
+            >
+
+                <div class="empty-heart">
+                    ♡
+                </div>
+
+                <h2>
+                    No favorites yet
+                </h2>
+
+                <p>
+                    Tap the heart on any product to save it here.
+                </p>
+
+                <a
+                    href="#home"
+                    class="primary-button"
+                >
+                    Browse products
+                </a>
+
+            </div>
+
+
+            <!-- Favorites grid -->
+
+            <div
+                id="favoritesGrid"
+                class="favorites-grid"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <span>
+            © 2026 Product Explorer. All rights reserved.
+        </span>
+
+        <div class="footer-links">
+
+            <a href="#home">
+                Main Data
+            </a>
+
+            <a href="#favorites">
+                Favorites
+            </a>
+
+            <a href="#home">
+                Back to top ↑
+            </a>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+></div>
+
+
+<script src="script.js" defer></script>
+
+</body>
+</html>
+
